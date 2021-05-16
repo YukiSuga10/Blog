@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,8 @@ use App\Http\Controllers\PostController;
 
 Route::get('/posts', 'PostController@index');
 Route::get('/posts/create', 'PostController@create');
+Route::get('/posts/search','SearchController@search');
+Route::get('/result', 'SearchController@search_result');
 Route::get('/posts/{post}', 'PostController@show');
 Route::get('/posts/{post}/edit', 'PostController@edit');
 

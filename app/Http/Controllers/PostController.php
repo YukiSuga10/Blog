@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostRequest;
+use Illuminate\Http\Request;
 use App\Post;
+use App\User;
 
 class PostController extends Controller
 {
@@ -25,8 +28,14 @@ class PostController extends Controller
     public function store(PostRequest $request, Post $post)
     {
         $input = $request['post'];
-        $post->fill($input)->save();
-        return redirect('/posts/' . $post->id);
+        $user_id = Auth::id();
+        $post = Post::insert([
+          "title" => $input['title'],
+          "body" => $input['body'],
+          "user_id" =>  $user_id,
+          ]);
+       
+        return redirect('/posts/' . $post['user_id']);
     }
     
     public function edit(Post $post)
@@ -47,4 +56,22 @@ class PostController extends Controller
         $post->delete();
         return redirect('/posts');
     }
+    
+    public function home(Post $post,User $user)
+    {
+        return view('auth.home')->with(['posts' => $post]);
+    }
+    
+    public function login(){
+        return view('auth.login');
+    }
+    
+   public function UserDetail(User $user){
+      $query = Post::query();
+      $query->where('user_id','=',$user->id);
+      $post->get();
+      return view('mypage')->with(['posts' => $post]);
+   }
+   
+   
 }

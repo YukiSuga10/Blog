@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+
 <!DOCTY<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -17,9 +21,11 @@
         <div class = "posts">
             @foreach ($posts as $post)
                 <div class = "post">
-                    <a href='/posts/{{ $post->id}}'><h2 class = "title">{{ $post->title }}</h2></a>
-                    <p class = "body">{{ $post->body }}</p>
+                   <a href='{{ action('PostController@UserDetail', $user->id) }}'><h2 class = "title">{{ $user->title }}</h2></a>
+                    <p class = "body">{{ $user->body }}</p>
                 </div>
+                @empty
+                <p>投稿はありません</p>
             @endforeach
         </div>
         <form method='GET' action="/">
@@ -31,3 +37,4 @@
         </div>
     </body>
 </html>
+@endsection

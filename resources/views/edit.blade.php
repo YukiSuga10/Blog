@@ -1,3 +1,4 @@
+
 <!DOCTY<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -12,6 +13,12 @@
     </head>
     <body>
         <h1>Blog Name</h1>
+        @if (Auth::id() == 1 && Auth::id() != $posts->user_id)
+        <script>
+            alert("編集はできません");
+        </script>
+        <p class="text-danger" style="color:red">※ゲストユーザーは、編集できません。</p>
+        @endif
         <form action="/posts/{{ $post->id }}" method="POST">
             {{ csrf_field() }}
             @method('PUT')
@@ -25,7 +32,12 @@
             <textarea name='post[body]'>{{ $post->body }}</textarea>
             <p class='body_error' style="color:red">{{ $errors->first('post.body') }}</p>
             </div>
+            @if (Auth::id()== 1)
+            <a href="/posts/{{ $post->id }}">戻る</a>
+            @else
             <input type='submit' value='update'>
+           
+            @endif
         </form>
         
     </body>

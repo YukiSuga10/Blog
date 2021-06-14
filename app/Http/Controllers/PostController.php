@@ -69,7 +69,7 @@ class PostController extends Controller
    public function UserDetail(User $user){
       $query = Post::query();
       $query->where('user_id','=',$user->id);
-      $post->get();
+      $post = $query->get();
       return view('mypage')->with(['posts' => $post]);
    }
    

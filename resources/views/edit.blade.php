@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Blog Name</h1>
-        @if (Auth::id() == 1 && Auth::id() != $posts->user_id)
+        @if (Auth::id() == 1 && Auth::id() != $post->user_id)
         <script>
             alert("編集はできません");
         </script>

@@ -18,6 +18,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
+    
+    //protected $fillable = ['users'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -36,4 +38,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    
+    public function getPaginateBylimit(int $limit_count = 10) 
+    {
+        return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    
+    public function posts(){
+        return $this->hasMany('App\Post',"user_id");
+    }
 }
